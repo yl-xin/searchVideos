@@ -113,3 +113,29 @@ const VideoDetail = ({video})=>{
     );
 };
 ```
+4. Add default video section:
+- update all state properties in App when we get API response:
+```
+        this.setState({
+            videos: response.data.items,
+            selectedVideo:response.data.items[0]
+        });
+```
+- Set default search term with `componentDidMount` method:
+
+
+
+#### Styling with [Semantic UI grid system](https://semantic-ui.com/collections/grid.html)
+Semantic UI grid system has 16 default wide columns:
+```
+<div className="ui grid">
+    <div className="ui row">
+        <div className="eleven wide column">
+            <VideoDetail video={this.state.selectedVideo}/>
+        </div>
+        <div className="five wide column">
+            <VideoList videos={this.state.videos} onVideoSelect={this.onVideoSelect}/>
+        </div>
+    </div>
+</div>
+```
