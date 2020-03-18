@@ -14,10 +14,10 @@ This project allows user to search Youtube videos.
     }
     })
     ```
-[Get Youtube API](https://console.developers.google.com/)
-Read YouTube API [Search:list documentation](https://developers.google.com/youtube/v3/docs/search/list)
+[Get Youtube API](https://console.developers.google.com/) and
+[Read YouTube API documentation](https://developers.google.com/youtube/v3/docs/search/list)
 
-3. Import the axios instance in App component. 
+3. Import the axios instance in App component`import youtube from '../apis/youtube';`
 4. Make a get request with axios.get(url[, config]) inside the function which is associated with the prop which was passed down to the SeachBar and got the search term. 
 ```
        const response =await youtube.get('search',{
@@ -27,4 +27,11 @@ Read YouTube API [Search:list documentation](https://developers.google.com/youtu
         });
 ```
 5. use setSate() method to assign the results to a state property `this.setState({videos: response.data.items})`
+
+Now the state object of the App component stores the list of videos of youtube.
+
+## Render Videos 
+Show videos in VideoList function component
+In App component, **Passing State as Props** to the VideoList: `<VideoList videos={this.state.videos}/>` Then in VideoList component, we can access the list of videos by visiting `props.videos`
+
 
