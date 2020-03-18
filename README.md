@@ -61,3 +61,19 @@ Use Semantic UI [list element](https://semantic-ui.com/elements/list.html) and [
 ## Show VideoDetail in App
 - add a selectedVideo property to the App state. Pass the selected video API to this selectedVideo property to tell the VideoDetail component what to show.
 - Communicate from child to parent by passing a reference of a method in App component down to VideoList, then down to each VideoItem, though props. Then anytime user click VideoItem, it calls the callback function as well as pass the video object to the callback. By invoking the method in App with the video object, the App component can uodate selectedVideo property of state to this video object.
+1. In App, create a new `selectedVideo` property for state `state = {videos:[],selectedVideo:null};`
+2. In App, create a method to update `selectedVideo` property of state:
+    ```
+        onVideoSelect = (video)=>{
+            console.log('Method From App',video);
+            this.setState({selectedVideo:video})
+        }
+    ```
+3. In App, Pass down this method to VideoList through a new prop `onVideoSelect`, note that the callback and prop name doesn't have to be the same:
+`<VideoList videos={this.state.videos} onVideoSelect={this.onVideoSelect}/>`
+4. In VideoList, destructure the props: 
+`const onVideoSelect = props.onVideoSelect;`
+Then pass down this method to VideoItem through props:
+`<VideoItem video={video} onVideoSelect={onVideoSelect}`
+5. In VideoItem, destructue the props, add an onClick event handler to pass the `video` to the `onVideoSelect` callback from App:
+`onClick={()=>onVideoSelect(video)} `

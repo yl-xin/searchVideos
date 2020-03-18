@@ -4,7 +4,8 @@ import youtube from '../apis/youtube';
 import VideoList from './VideoList'
 
 class App extends React.Component{
-    state = {videos:[]}; 
+    state = {videos:[],selectedVideo:null}; 
+    
     // when user submit form, this fucntion is called
     onTermSubmit=async (term)=>{
         // console.log(term);
@@ -18,13 +19,18 @@ class App extends React.Component{
         this.setState({videos: response.data.items})
 
     };
+    
+    onVideoSelect = (video)=>{
+        console.log('Method From App',video);
+        // this.setState({selectedVideo:video});
+    }
 
     render(){
         return (
             <div className="ui container">
                 <SearchBar onFormSubmit={this.onTermSubmit}/>
                 {/* I have {this.state.videos.length} videos */}
-                <VideoList videos={this.state.videos}/>
+                <VideoList videos={this.state.videos} onVideoSelect={this.onVideoSelect}/>
             </div>
         );
     }
