@@ -59,6 +59,7 @@ const VideoItem = ({video})=>{
 Use Semantic UI [list element](https://semantic-ui.com/elements/list.html) and [some css](./src/components/VideoItem.css) to style the list.
 
 ## Show VideoDetail in App
+#### Passing selected video from child to parent by calling a callback function from parent with the video argument.
 - add a selectedVideo property to the App state. Pass the selected video API to this selectedVideo property to tell the VideoDetail component what to show.
 - Communicate from child to parent by passing a reference of a method in App component down to VideoList, then down to each VideoItem, though props. Then anytime user click VideoItem, it calls the callback function as well as pass the video object to the callback. By invoking the method in App with the video object, the App component can uodate selectedVideo property of state to this video object.
 1. In App, create a new `selectedVideo` property for state `state = {videos:[],selectedVideo:null};`
@@ -77,3 +78,38 @@ Then pass down this method to VideoItem through props:
 `<VideoItem video={video} onVideoSelect={onVideoSelect}`
 5. In VideoItem, destructue the props, add an onClick event handler to pass the `video` to the `onVideoSelect` callback from App:
 `onClick={()=>onVideoSelect(video)} `
+
+#### Passing the selected Video object to VideoDetail through props
+1. create a functional component VideoDetail. Because video is initially set to `null`, we need conditional Rendering:
+    ```
+    const VideoDetail = ({video})=>{
+        if(!video) {
+            return <div>loading...</div>
+        }
+        return <div>{video.snippet.title}</div>
+    };
+    ```
+2. In App, inset `VideoDetail` component and pass down the selected video stored in state's `selectedVideo` property to VideoDetail through props: ` <VideoDetail video={this.state.selectedVideo}/>`
+
+3. In VideoDetail, return more details of selected video:
+```
+//conditional rendering, video is initially set to null in App
+const VideoDetail = ({video})=>{
+    if(!video) {
+        return <div>loading...</div>
+    }
+    // ES2015 template string put the value of video.id.videoId into this string.
+    const embedSrc = `https://www.youtube.com/embed/${video.id.videoId}`;
+    return (
+        <div>
+            <div className="ui embed">
+                <iframe src={embedSrc} title="video player"/>
+            </div>
+            <div className="ui segment">
+                <h4 className="ui header">{video.snippet.title}</h4>
+                <p>{video.snippet.description}</p>
+            </div>
+        </div>
+    );
+};
+```
