@@ -54,3 +54,10 @@ const VideoItem = ({video})=>{
         </div>);
 };
 ```
+
+### Styling the list
+Use Semantic UI [list element](https://semantic-ui.com/elements/list.html) and [some css](./src/components/VideoItem.css) to style the list.
+
+## Show VideoDetail in App
+- add a selectedVideo property to the App state. Pass the selected video API to this selectedVideo property to tell the VideoDetail component what to show.
+- Communicate from child to parent by passing a reference of a method in App component down to VideoList, then down to each VideoItem, though props. Then anytime user click VideoItem, it calls the callback function as well as pass the video object to the callback. By invoking the method in App with the video object, the App component can uodate selectedVideo property of state to this video object.
